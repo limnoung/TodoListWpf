@@ -1,5 +1,6 @@
 # Image
-![StartImg]({{ site.baseurl }}/Img/main.png)
+
+<p align="left"><img src="./img/main.png" width="80%"/></a></p>
 
 ## Download
 
