@@ -1,5 +1,5 @@
 # Image
-![StartImg]({{ site.baseurl }}/img/main.png)
+![StartImg]({{ site.baseurl }}/Img/main.png)
 
 ## Download
 
