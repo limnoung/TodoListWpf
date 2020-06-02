@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:TodoList"
              StartupUri="/View/TodoListWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Order is Important -->
+                <ResourceDictionary Source="Style/Colors.xaml"/>
+                <ResourceDictionary Source="Style/Font.xaml"/>
+                <ResourceDictionary Source="Style/Buttons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

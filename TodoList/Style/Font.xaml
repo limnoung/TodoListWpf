@@ -4,7 +4,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
 
-    <FontFamily x:Key="FontAwesome5">pack://application;,,,/Font/#Font Awesome 5 Free Solid</FontFamily>
+    <FontFamily x:Key="FontAwesome">pack://application;,,,/Font/#FontAwesome</FontFamily>
     <FontFamily x:Key="HancomSans">pack://application;,,,/Font/#Hancom Sans Light</FontFamily>
 
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">

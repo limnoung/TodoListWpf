@@ -11,6 +11,12 @@ namespace TodoList
 {
     class TodoListViewModel : BindableBase
     {
+        #region Private Member
+
+        private string TextDate;
+
+        #endregion
+
         #region Command
 
         private ICommand registrationCommand;

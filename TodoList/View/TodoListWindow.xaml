@@ -33,13 +33,17 @@
                     <ColumnDefinition Width="70"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeLeftIcon}"/>
-                <TextBox Grid.Column="1" Background="{StaticResource BackgroundLight}"/>
+                <TextBox Grid.Column="1" Background="{StaticResource BackgroundLightBrush}" Text="{Binding TextDate}"/>
                 <Button Grid.Column="2" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeRightIcon}"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <ListBox Margin="2,2" Grid.Row="1" ItemsSource="{Binding SelectedTodoList, UpdateSourceTrigger=PropertyChanged}" 
-                     SelectedItem="{Binding SelectedTodo, Mode=TwoWay}" BorderBrush="White" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox Margin="2,2" ItemsSource="{Binding SelectedTodoList, UpdateSourceTrigger=PropertyChanged}" 
+                     SelectedItem="{Binding SelectedTodo, Mode=TwoWay}" BorderBrush="White" Grid.ColumnSpan="2" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Padding" Value="5"/>
