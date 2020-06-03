@@ -13,7 +13,21 @@ namespace TodoList
     {
         #region Private Member
 
-        private string TextDate;
+
+        #endregion
+
+
+        #region Public Properties
+
+        /// <summary>
+        /// 창의 최소 넓이
+        /// </summary>
+        public double WindowMinimumWidth { get; set; } = 800;
+
+        /// <summary>
+        /// 창 최소 높이
+        /// </summary>
+        public double WindowMinimumHeight { get; set; } = 600;
 
         #endregion
 

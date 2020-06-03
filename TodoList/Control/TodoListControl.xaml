@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="TodoList.TodoListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TodoList"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <!-- Main Background -->
+            <Border Background="{StaticResource ForegroundLightBrush}">
+                <!-- Content -->
+                <Grid>
+                    <!-- Top Menu -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!-- To do list -->
+                    <ContentPresenter Grid.Row="1"/>
+                    <Grid Background="{StaticResource BackgroundDarkBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="70"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Margin="5" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeLeftIcon}" Grid.Column="0"/>
+                        <TextBox Margin="2" Background="{StaticResource BackgroundLightBrush}" Text="{Binding TextDate}" Grid.Column="1"/>
+                        <Button Margin="5" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeRightIcon}" Grid.Column="2"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

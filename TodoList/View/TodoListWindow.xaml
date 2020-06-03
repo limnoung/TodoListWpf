@@ -8,7 +8,9 @@
         xmlns:local="clr-namespace:TodoList"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="TodoList" Height="768" Width="800">
+        MinHeight="{Binding WindowMinimumHeight}"
+        MinWidth="{Binding WindowMinimumWidth}"
+        Title="TodoList" Height="600" Width="800">
     <Window.DataContext>
         <local:TodoListViewModel />
     </Window.DataContext>
@@ -19,31 +21,49 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Column="0" Background="{StaticResource BackgroundLightBrush}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeLeftIcon}"/>
-                <TextBox Grid.Column="1" Background="{StaticResource BackgroundLightBrush}" Text="{Binding TextDate}"/>
-                <Button Grid.Column="2" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeRightIcon}"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Calendar Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" 
+                          SelectedDatesChanged="Calendar_SelectedDatesChanged">
+                    <Calendar.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Calendar.RenderTransform>
+                </Calendar>
+                <Label Grid.Row="2" Name="TimeLabel" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"
+               FontFamily="{StaticResource HancomSans}" FontSize="35" >
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock />
+                        <TextBlock/>
+                        <TextBlock/>
+                    </StackPanel>
+                </Label>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="469*"/>
+                <ColumnDefinition Width="323*"/>
             </Grid.ColumnDefinitions>
             <ListBox Margin="2,2" ItemsSource="{Binding SelectedTodoList, UpdateSourceTrigger=PropertyChanged}" 
-                     SelectedItem="{Binding SelectedTodo, Mode=TwoWay}" BorderBrush="White" Grid.ColumnSpan="2" >
+                     SelectedItem="{Binding SelectedTodo, Mode=TwoWay}" BorderBrush="White" Grid.ColumnSpan="3" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="Padding" Value="5"/>
