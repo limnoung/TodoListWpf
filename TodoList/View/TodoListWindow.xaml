@@ -35,7 +35,7 @@
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Calendar Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" 
-                          SelectedDatesChanged="Calendar_SelectedDatesChanged">
+                          SelectedDatesChanged="Calendar_SelectedDatesChanged" x:Name="ControlCalendar">
                     <Calendar.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
@@ -45,24 +45,53 @@
                         </TransformGroup>
                     </Calendar.RenderTransform>
                 </Calendar>
-                <Label Grid.Row="2" Name="TimeLabel" VerticalAlignment="Center" 
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <Button Margin="5" Content="AM" />
+                    <Button Margin="5" Content="PM"/>
+                </StackPanel>
+                <Border Grid.Row="2" Name="ClockBorder" BorderThickness="2" BorderBrush="{StaticResource BackgroundDarkBrush}" >
+                    <Label  Name="LabelTime" VerticalAlignment="Center" 
                        HorizontalAlignment="Center"
                FontFamily="{StaticResource HancomSans}" FontSize="35" >
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock />
-                        <TextBlock/>
-                        <TextBlock/>
-                    </StackPanel>
-                </Label>
+                    </Label>
+                </Border> 
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="469*"/>
-                <ColumnDefinition Width="323*"/>
-            </Grid.ColumnDefinitions>
-            <ListBox Margin="2,2" ItemsSource="{Binding SelectedTodoList, UpdateSourceTrigger=PropertyChanged}" 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Top Menu -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="{StaticResource FontAwesomeLeftIcon}" Style="{StaticResource IconButton}"
+                        Click="LeftButton_Click"/>
+                <Grid Grid.Column="1" Background="{StaticResource BackgroundLightBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Background="{StaticResource BackgroundLightBrush}" Name="TextData"
+                               Foreground="Black" TextAlignment="Center" 
+                           FontSize="{StaticResource FontSizeLarge}" FontFamily="Hancom Sans Light" Margin="0,10,0,0" />
+                </Grid>
+
+                <Button Grid.Column="2" Content="{StaticResource FontAwesomeRightIcon}" Style="{StaticResource IconButton}" 
+                        FontFamily="FontAwesome" Click="RightButton_Click"/>
+            </Grid>
+            
+            <!-- List Box -->
+            <ListBox Grid.Row="1" Margin="2,2" ItemsSource="{Binding SelectedTodoList, UpdateSourceTrigger=PropertyChanged}" 
                      SelectedItem="{Binding SelectedTodo, Mode=TwoWay}" BorderBrush="White" Grid.ColumnSpan="3" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">

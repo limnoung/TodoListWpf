@@ -10,56 +10,98 @@ namespace TodoList
     /// </summary>
     public partial class TodoListWindow : Window
     {
-        #region Private Properties
+        #region Private Member
 
-        /// <summary>
-        /// 선택된 년도
-        /// </summary>
-        private int mYear;
+        private Calendar mCalendar;
 
-        /// <summary>
-        /// 선택된 월
-        /// </summary>
-        private int mMonth;
+        private DateTime mDateTime;
 
-        /// <summary>
-        /// 선택된 일
-        /// </summary>
-        private int mDay;
+        private DispatcherTimer Timer = new DispatcherTimer();
         #endregion
 
-        DispatcherTimer Timer = new DispatcherTimer();
+        #region Private Properties       
+
+        #endregion
+
+        #region Constructor
+
         public TodoListWindow()
         {
-            mYear = DateTime.Now.Year;
-            mMonth = DateTime.Now.Month;
-            mDay = DateTime.Now.Day;
-
             InitializeComponent();
+
             Timer.Tick += new EventHandler(Timer_Click);
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Start();
+            mCalendar = ControlCalendar;
+            mCalendar.SelectedDate = DateTime.Now;
+            mDateTime = mCalendar.SelectedDate.Value;
+            TextData.Text = String.Format("{0}년 {1}월 {2}일\n", mDateTime.Year%100, mDateTime.Month, mDateTime.Day);
         }
 
+        #endregion
+
+        /// <summary>
+        /// 시계의 타이머
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Click(object sender, EventArgs e)
         {
             DateTime d;
             d = DateTime.Now;
-            TimeLabel.Content = String.Format("{0}년 {1}월 {2}일\n", mYear%100, mMonth, mDay);
-            TimeLabel.Content += String.Format(d.ToString("tt\nhh : mm : ss"));
+            LabelTime.Content = String.Format(d.ToString("tt\nhh : mm : ss"));
         }
-
+        /// <summary>
+        /// 달력의 날짜가 변경되었을 때의 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Calendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             var calendar = sender as Calendar;
 
             if (calendar.SelectedDate.HasValue)
             {
-                DateTime date = calendar.SelectedDate.Value;
-                mYear = date.Year;
-                mMonth = date.Month;
-                mDay = date.Day;
+                mDateTime = calendar.SelectedDate.Value;
+                TextData.Text = String.Format("{0}년 {1}월 {2}일\n", mDateTime.Year % 100, mDateTime.Month, mDateTime.Day);
             }
         }
+        /// <summary>
+        /// 이전 날짜의 일정으로 이동합니다
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (mCalendar.SelectedDate.HasValue)
+            {
+                DateTime date = mCalendar.SelectedDate.Value;
+                date.AddDays(-1);
+                mCalendar.SelectedDate = date;
+            }
+        }
+        /// <summary>
+        /// 다음 날짜의 일정으로 이동합니다.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RightButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (mCalendar.SelectedDate.HasValue)
+            {
+                DateTime date = mCalendar.SelectedDate.Value;
+                date.AddDays(1);
+                mCalendar.SelectedDate = date;
+            }
+        }
+
+        /// <summary>
+        /// 일정 리스트를 갱신합니다.
+        /// </summary>
+        private void ChangeTodoList()
+        {
+
+        }
+
     }
 }
