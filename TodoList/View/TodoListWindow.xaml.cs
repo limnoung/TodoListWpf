@@ -103,5 +103,24 @@ namespace TodoList
 
         }
 
+        /// <summary>
+        /// 일정 추가 버튼
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddTodoListButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 일정 삭제 버튼
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RemoveTodoListButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
