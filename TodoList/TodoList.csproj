@@ -62,7 +62,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Page\AddList.xaml">
+    <Page Include="Page\RemoveListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Page\AddListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,8 +100,11 @@
     </Compile>
     <Compile Include="DataModel\TodoListDataModel.cs" />
     <Compile Include="Model\TodoListModel.cs" />
-    <Compile Include="Page\AddList.xaml.cs">
-      <DependentUpon>AddList.xaml</DependentUpon>
+    <Compile Include="Page\RemoveListWindow.xaml.cs">
+      <DependentUpon>RemoveListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\AddListWindow.xaml.cs">
+      <DependentUpon>AddListWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

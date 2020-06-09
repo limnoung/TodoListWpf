@@ -10,7 +10,8 @@
         WindowStartupLocation="CenterScreen"
         MinHeight="{Binding WindowMinimumHeight}"
         MinWidth="{Binding WindowMinimumWidth}"
-        Title="TodoList" Height="600" Width="800">
+        Title="TodoList" Height="600" Width="800"
+        Closing="Window_Closing">
     <Window.DataContext>
         <local:TodoListViewModel />
     </Window.DataContext>

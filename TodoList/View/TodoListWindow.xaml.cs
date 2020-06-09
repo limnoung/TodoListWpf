@@ -17,9 +17,10 @@ namespace TodoList
         private DateTime mDateTime;
 
         private DispatcherTimer Timer = new DispatcherTimer();
-        #endregion
 
-        #region Private Properties       
+        private AddListWindow mAddListWindow;
+
+        private RemoveListWindow mRemoveListWindow;
 
         #endregion
 
@@ -38,6 +39,14 @@ namespace TodoList
             TextData.Text = String.Format("{0}년 {1}월 {2}일\n", mDateTime.Year%100, mDateTime.Month, mDateTime.Day);
         }
 
+
+        ~TodoListWindow()
+        {
+            Timer = null;
+            mAddListWindow = null;
+            mRemoveListWindow = null;
+            Close();
+        }
         #endregion
 
         /// <summary>
@@ -110,7 +119,11 @@ namespace TodoList
         /// <param name="e"></param>
         private void AddTodoListButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if(this.mAddListWindow == null)
+            {
+                mAddListWindow = new AddListWindow();
+            }
+            mAddListWindow.ShowDialog();
         }
 
         /// <summary>
@@ -120,7 +133,16 @@ namespace TodoList
         /// <param name="e"></param>
         private void RemoveTodoListButton_Click(object sender, RoutedEventArgs e)
         {
+            if(this.mRemoveListWindow == null)
+            {
+                mRemoveListWindow = new RemoveListWindow();
+            }
+            mRemoveListWindow.ShowDialog();
+        }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            System.Environment.Exit(0);
         }
     }
 }
