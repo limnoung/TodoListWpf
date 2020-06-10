@@ -46,7 +46,7 @@ namespace TodoList
             }
             set { registrationCommand = value; }
         }
-
+         
         private void ExcuetRegistration(object param)
         {
             //SelectedTodoList.Add(new TodoListModel() { Seq = 1, Desc = "희영씨 시작해" });

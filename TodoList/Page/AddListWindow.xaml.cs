@@ -28,7 +28,7 @@ namespace TodoList
 
         private DateTime selDate;
 
-        private String addText { get; set; }
+        private String addText;
 
         delegate void FHideWindow();
 
@@ -81,8 +81,12 @@ namespace TodoList
         private void Calendar_AddList_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             var calendar = sender as Calendar;
-            selDate = calendar.SelectedDate.Value;
-            DatePicker_AddList.SelectedDate = selDate;
+            if (calendar.SelectedDate != null)
+            {
+                selDate = calendar.SelectedDate.Value;
+                DatePicker_AddList.SelectedDate = selDate;
+            }
+
         }
 
         /// <summary>
@@ -96,11 +100,17 @@ namespace TodoList
 
         }
 
+        /// <summary>
+        /// 취소 버튼 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            DatePicker_AddList.SelectedDate = null;
-            Calendar_AddList.SelectedDate = null;
-            addText = "";
+            DatePicker_AddList.DisplayDate = DateTime.Now;
+            Calendar_AddList.SelectedDate = DateTime.Now;
+            addTextBox.Text = "";
+            addTextBox.UpdateLayout();
             Hide();
         }
     }

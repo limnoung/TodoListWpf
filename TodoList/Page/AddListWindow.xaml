@@ -50,7 +50,8 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <TextBlock Padding="0 0 30 0" VerticalAlignment="Center" Text="추가할 내용" Style="{StaticResource BGBlackTextBlockSmall}"/>
                     <TextBox Height="50" TextAlignment="Left" Width="180" MaxLines="2" MaxLength="255"
-                             Text="{Binding addText, Mode=TwoWay}" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" />
+                             Text="{Binding addText}" VerticalAlignment="Center" VerticalContentAlignment="Center" 
+                             HorizontalAlignment="Left" Name="addTextBox"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">

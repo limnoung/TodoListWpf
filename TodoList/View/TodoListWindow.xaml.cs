@@ -45,7 +45,6 @@ namespace TodoList
             Timer = null;
             mAddListWindow = null;
             mRemoveListWindow = null;
-            Close();
         }
         #endregion
 
@@ -58,7 +57,7 @@ namespace TodoList
         {
             DateTime d;
             d = DateTime.Now;
-            LabelTime.Content = String.Format(d.ToString("tt\nhh : mm : ss"));
+            LabelTime.Content = String.Format("{0}년 {1}월 {2}일\n{3}", d.Year % 100, d.Month, d.Day, d.ToString("tt\nhh : mm : ss"));
         }
         /// <summary>
         /// 달력의 날짜가 변경되었을 때의 이벤트
@@ -72,7 +71,7 @@ namespace TodoList
             if (calendar.SelectedDate.HasValue)
             {
                 mDateTime = calendar.SelectedDate.Value;
-                TextData.Text = String.Format("{0}년 {1}월 {2}일\n", mDateTime.Year % 100, mDateTime.Month, mDateTime.Day);
+                ChangeDate();
             }
         }
         /// <summary>
@@ -85,8 +84,9 @@ namespace TodoList
             if (mCalendar.SelectedDate.HasValue)
             {
                 DateTime date = mCalendar.SelectedDate.Value;
-                date.AddDays(-1);
-                mCalendar.SelectedDate = date;
+                date = date.AddDays(-1);
+                mDateTime = date;
+                ChangeDate();
             }
         }
         /// <summary>
@@ -99,10 +99,44 @@ namespace TodoList
             if (mCalendar.SelectedDate.HasValue)
             {
                 DateTime date = mCalendar.SelectedDate.Value;
-                date.AddDays(1);
-                mCalendar.SelectedDate = date;
+                date = date.AddDays(1);
+                mDateTime = date;
+                ChangeDate();
             }
         }
+
+        /// <summary>
+        /// 현재 날짜에서 한 해 전으로 이동합니다.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoubleLeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (mCalendar.SelectedDate.HasValue)
+            {
+                DateTime date = mCalendar.SelectedDate.Value;
+                date = date.AddYears(-1);
+                mDateTime = date;
+                ChangeDate();
+            }
+        }
+
+        /// <summary>
+        /// 현재 날짜에서 한 해 후로 이동합니다.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoubleRightButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (mCalendar.SelectedDate.HasValue)
+            {
+                DateTime date = mCalendar.SelectedDate.Value;
+                date = date.AddYears(1);
+                mDateTime = date;
+                ChangeDate();
+            }
+        }
+
 
         /// <summary>
         /// 일정 리스트를 갱신합니다.
@@ -140,9 +174,26 @@ namespace TodoList
             mRemoveListWindow.ShowDialog();
         }
 
+        private void ChangeDate()
+        {
+            // 현재 표시되는 월, 년과 선택되어져 있는 월, 년이 다를 경우
+            if (mCalendar.SelectedDate.Value.Month != mDateTime.Month || mCalendar.DisplayDate.Month != mDateTime.Month
+                ||mCalendar.SelectedDate.Value.Year != mDateTime.Year || mCalendar.DisplayDate.Year != mDateTime.Year)
+                mCalendar.DisplayDate = mDateTime;
+            mCalendar.SelectedDate = mDateTime;
+            TextData.Text = String.Format("{0}년 {1}월 {2}일", mDateTime.Year % 100, mDateTime.Month, mDateTime.Day);
+        }
+
+
+        /// <summary>
+        /// 윈도우 창이 닫길때의 이벤트 함수
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             System.Environment.Exit(0);
         }
+
     }
 }

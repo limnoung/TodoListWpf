@@ -18,8 +18,6 @@ namespace TodoList
     {
         #region Private Properties
 
-
-
         #endregion
 
         #region Private Member
