@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -10,17 +11,27 @@ namespace TodoList
     /// </summary>
     public partial class TodoListWindow : Window
     {
-        #region Private Member
+        #region Private Properties
 
         private Calendar mCalendar;
 
         private DateTime mDateTime;
 
-        private DispatcherTimer Timer = new DispatcherTimer();
+        private DispatcherTimer Timer;
 
         private AddListWindow mAddListWindow;
 
         private RemoveListWindow mRemoveListWindow;
+
+        private JsonParser jsonParser;
+
+        private JArray doListArray;
+
+        #endregion
+
+        #region Public Properties
+
+
 
         #endregion
 
@@ -29,16 +40,9 @@ namespace TodoList
         public TodoListWindow()
         {
             InitializeComponent();
-
-            Timer.Tick += new EventHandler(Timer_Click);
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Start();
-            mCalendar = ControlCalendar;
-            mCalendar.SelectedDate = DateTime.Now;
-            mDateTime = mCalendar.SelectedDate.Value;
-            TextData.Text = String.Format("{0}년 {1}월 {2}일\n", mDateTime.Year%100, mDateTime.Month, mDateTime.Day);
+            InitTimer();
+            InitCalendar();
         }
-
 
         ~TodoListWindow()
         {
@@ -46,7 +50,55 @@ namespace TodoList
             mAddListWindow = null;
             mRemoveListWindow = null;
         }
+
         #endregion
+
+        #region Private Method
+
+        /// <summary>
+        /// 타이머의 Dispatcher, Tick 할당
+        /// </summary>
+        private void InitTimer()
+        {
+            Timer = new DispatcherTimer();
+            Timer.Tick += new EventHandler(Timer_Click);
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Start();
+        }
+
+        /// <summary>
+        /// 캘린더의 초기화 함수
+        /// </summary>
+        private void InitCalendar()
+        {
+            mCalendar = ControlCalendar;
+            mCalendar.SelectedDate = DateTime.Now;
+            mDateTime = mCalendar.SelectedDate.Value;
+            ChangeDate();
+        }
+
+        /// <summary>
+        /// Json Parser 초기화 함수
+        /// </summary>
+        private void InitJsonParser()
+        {
+            if(jsonParser == null)
+            {
+                jsonParser = new JsonParser();
+            }
+            doListArray = jsonParser.jsonListArray;
+
+            foreach(JObject fElem in doListArray)
+            {
+                var fDate = fElem["Date"];
+                DateTime dt;
+                if(fDate != null)
+                {
+                   dt = DateTime.Parse(fDate.ToString());
+                   ControlCalendar.
+                }
+            }
+        }
 
         /// <summary>
         /// 시계의 타이머
@@ -59,6 +111,7 @@ namespace TodoList
             d = DateTime.Now;
             LabelTime.Content = String.Format("{0}년 {1}월 {2}일\n{3}", d.Year % 100, d.Month, d.Day, d.ToString("tt\nhh : mm : ss"));
         }
+
         /// <summary>
         /// 달력의 날짜가 변경되었을 때의 이벤트
         /// </summary>
@@ -74,6 +127,7 @@ namespace TodoList
                 ChangeDate();
             }
         }
+
         /// <summary>
         /// 이전 날짜의 일정으로 이동합니다
         /// </summary>
@@ -89,6 +143,7 @@ namespace TodoList
                 ChangeDate();
             }
         }
+
         /// <summary>
         /// 다음 날짜의 일정으로 이동합니다.
         /// </summary>
@@ -137,13 +192,21 @@ namespace TodoList
             }
         }
 
-
         /// <summary>
         /// 일정 리스트를 갱신합니다.
         /// </summary>
         private void ChangeTodoList()
         {
+            foreach(JObject fElem in doListArray)
+            {
+                var fDate = fElem["Date"];
+                if(fDate != null)
+                {
+                    var fDesc = fElem["Desc"];
 
+
+                }
+            }
         }
 
         /// <summary>
@@ -174,6 +237,9 @@ namespace TodoList
             mRemoveListWindow.ShowDialog();
         }
 
+        /// <summary>
+        /// 날짜 변경시의 UI 변경
+        /// </summary>
         private void ChangeDate()
         {
             // 현재 표시되는 월, 년과 선택되어져 있는 월, 년이 다를 경우
@@ -184,7 +250,6 @@ namespace TodoList
             TextData.Text = String.Format("{0}년 {1}월 {2}일", mDateTime.Year % 100, mDateTime.Month, mDateTime.Day);
         }
 
-
         /// <summary>
         /// 윈도우 창이 닫길때의 이벤트 함수
         /// </summary>
@@ -194,6 +259,9 @@ namespace TodoList
         {
             System.Environment.Exit(0);
         }
+
+
+        #endregion
 
     }
 }
