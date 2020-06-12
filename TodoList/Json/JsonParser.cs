@@ -52,12 +52,28 @@ namespace TodoList
         /// </summary>
         public void RefreshArray()
         {
-            foreach (JArray fElem in jsonListArray)
+            foreach (JObject fElem in jsonListArray)
             {
                 var fDate = fElem["Date"] ?? "<NoDate>";
                 var fDesc = fElem["Desc"] ?? "<NoDesc>";
 
             }
+        }
+
+        public void AddJson(DateTime dt, String desc)
+        {
+            var jobject = new JObject();
+            if (dt.Month < 10)
+            {
+                String date = String.Format("{0}-0{1}-{2}", dt.Year, dt.Month, dt.Day);
+            }
+            else
+            {
+                String date = String.Format("{0}-{1}-{2}", dt.Year, dt.Month, dt.Day);
+            }
+
+            jobject.Add("Date",)
+            jsonListArray.Add()
         }
 
         #endregion

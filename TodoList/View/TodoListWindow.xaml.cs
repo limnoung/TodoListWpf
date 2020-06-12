@@ -42,6 +42,7 @@ namespace TodoList
             InitializeComponent();
             InitTimer();
             InitCalendar();
+            InitJsonParser();
         }
 
         ~TodoListWindow()
@@ -221,6 +222,7 @@ namespace TodoList
                 mAddListWindow = new AddListWindow();
             }
             mAddListWindow.ShowDialog();
+            //ChangeTodoList();
         }
 
         /// <summary>
