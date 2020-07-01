@@ -96,7 +96,7 @@ namespace TodoList
                 if(fDate != null)
                 {
                    dt = DateTime.Parse(fDate.ToString());
-                   ControlCalendar.
+                   //ControlCalendar.
                 }
             }
         }

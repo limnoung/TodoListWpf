@@ -96,7 +96,10 @@ namespace TodoList
         /// <param name="e"></param>
         private void AddBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-           
+           if(addTextBox.Text.Length == 0)
+            {
+                MessageBox.Show("내용이 비어있습니다.", "에러", MessageBoxButton.OK);
+            }
 
         }
 

@@ -60,20 +60,26 @@ namespace TodoList
             }
         }
 
+        /// <summary>
+        /// Json Array에 일정 Date 추가
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="desc"></param>
         public void AddJson(DateTime dt, String desc)
         {
             var jobject = new JObject();
+            String date;
             if (dt.Month < 10)
             {
-                String date = String.Format("{0}-0{1}-{2}", dt.Year, dt.Month, dt.Day);
+                date = String.Format("{0}-0{1}-{2}", dt.Year, dt.Month, dt.Day);
             }
             else
             {
-                String date = String.Format("{0}-{1}-{2}", dt.Year, dt.Month, dt.Day);
+                date = String.Format("{0}-{1}-{2}", dt.Year, dt.Month, dt.Day);
             }
-
-            jobject.Add("Date",)
-            jsonListArray.Add()
+            jobject.Add("Date", date);
+            jobject.Add("Desc", desc);
+            jsonListArray.Add(jobject);
         }
 
         #endregion
