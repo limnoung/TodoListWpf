@@ -102,7 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataModel\TodoListDataModel.cs" />
+    <Compile Include="Converter\DoListDateConverter.cs" />
     <Compile Include="Json\JsonParser.cs" />
     <Compile Include="Model\TodoListModel.cs" />
     <Compile Include="Page\RemoveListWindow.xaml.cs">

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using TodoList.Mvvm;
 
@@ -33,22 +29,48 @@ namespace TodoList
         #endregion
 
         #region Command
+        public class RegisterCommand : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+            private DateTime _date;
+            private String _desc;
+            
+            public RegisterCommand(DateTime date, String desc)
+            {
+                _date = date;
+                _desc = desc;
+            }
 
-        private ICommand registrationCommand;
+            public bool CanExecute(object parameter)
+            {
+               if(_date == null || _desc == String.Empty)
+                {
+                    return false;
+                }
+                return true;
+            }
 
-        public ICommand RegistrationCommand
+            public void Execute(object parameter)
+            {
+                SELECTE
+            }
+        }
+        private RegisterCommand registrationCommand;
+
+        public RegisterCommand RegistrationCommand
         {
             get
             {
                 if (registrationCommand == null)
-                    registrationCommand = new DelegateCommand<object>(ExcuetRegistration);
+                    registrationCommand = new DelegateCommand<object>(ExcuteRegistration);
                 return registrationCommand;
             }
             set { registrationCommand = value; }
         }
          
-        private void ExcuetRegistration(object param)
+        private void ExcuteRegistration(object param)
         {
+
             //SelectedTodoList.Add(new TodoListModel() { Seq = 1, Desc = "희영씨 시작해" });
 
         }

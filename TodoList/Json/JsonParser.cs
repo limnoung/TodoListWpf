@@ -16,13 +16,28 @@ namespace TodoList
 
         private String txt;
 
+        private static JsonParser instance;
 
         #endregion
 
         #region Public Properties
 
-
-        public JArray jsonListArray;
+        private JArray jsonListArray;
+        public JArray JsonListArray
+        {
+            get
+            {
+                if(jsonListArray == null)
+                {
+                    jsonListArray = new JArray();
+                }
+                return jsonListArray;
+            }
+            set
+            {
+                jsonListArray = value;
+            }
+        }
 
         #endregion
 
@@ -30,29 +45,63 @@ namespace TodoList
         #region Constructor
         public JsonParser()
         {
-            jsonListArray = new JArray();
-            InitParse();
+            instance = null;
+            LoadFile();
         }
         #endregion
 
         #region Public Method
+        public static JsonParser GetInstance()
+        {
+            if(instance == null)
+            {
+                instance = new JsonParser();
+            }
+            return instance;
+        }
 
         /// <summary>
         /// Json 파일을 불러와준다
         /// </summary>
-        public void InitParse()
+        public bool LoadFile()
         {
             StreamReader sr = new StreamReader(filePath);
-            txt = sr.ReadToEnd();
-            jsonListArray = JArray.Parse(txt);
+            if (sr == null)
+                return false;
+            else
+            {
+                txt = sr.ReadToEnd();
+                JsonListArray = JArray.Parse(txt);
+            }
+            sr.Close();
+            return true;
         }
+
+        /// <summary>
+        /// Json 파일로 저장한다.
+        /// </summary>
+        /// <returns></returns>
+        public bool WriteFile()
+        {
+            StreamWriter sw = new StreamWriter(filePath, false);
+            if (sw == null)
+                return false;
+            else
+            {
+                txt = JsonListArray.ToString();
+                sw.Write(txt);
+            }
+            sw.Close();
+            return true;
+        }
+        
 
         /// <summary>
         /// 불러와진 Json 파일을 이용하여 List 갱신
         /// </summary>
         public void RefreshArray()
         {
-            foreach (JObject fElem in jsonListArray)
+            foreach (JObject fElem in JsonListArray)
             {
                 var fDate = fElem["Date"] ?? "<NoDate>";
                 var fDesc = fElem["Desc"] ?? "<NoDesc>";
@@ -69,17 +118,10 @@ namespace TodoList
         {
             var jobject = new JObject();
             String date;
-            if (dt.Month < 10)
-            {
-                date = String.Format("{0}-0{1}-{2}", dt.Year, dt.Month, dt.Day);
-            }
-            else
-            {
-                date = String.Format("{0}-{1}-{2}", dt.Year, dt.Month, dt.Day);
-            }
+            date = String.Format("{0:yyyy-MM-dd}", dt);
             jobject.Add("Date", date);
             jobject.Add("Desc", desc);
-            jsonListArray.Add(jobject);
+            JsonListArray.Add(jobject);
         }
 
         #endregion

@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace TodoList
 {
@@ -24,11 +17,9 @@ namespace TodoList
 
         #region Private Member
 
-        bool? private_dialog_result;
+        private JsonParser jsonParser;
 
         private DateTime selDate;
-
-        private String addText;
 
         delegate void FHideWindow();
 
@@ -38,28 +29,12 @@ namespace TodoList
 
         public AddListWindow()
         {
-            selDate = DateTime.Now;
-            addText = "";
             InitializeComponent();
+            selDate = DateTime.Now;
+            jsonParser = JsonParser.GetInstance();
         }
 
         #endregion
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = true;
-            private_dialog_result = DialogResult;
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new FHideWindow(HideThisWindow));
-        }
-
-        private void HideThisWindow()
-        {
-            this.Hide();
-            (typeof(Window)).GetField("_isClosing", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(this, false);
-            (typeof(Window)).GetField("_dialogResult", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(this, private_dialog_result);
-            private_dialog_result = null;
-        }
-
         /// <summary>
         /// DatePicker의 Date가 변경되었을때의 이벤트
         /// </summary>
@@ -96,9 +71,23 @@ namespace TodoList
         /// <param name="e"></param>
         private void AddBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-           if(addTextBox.Text.Length == 0)
+            var calendar = DatePicker_AddList as DatePicker;
+            if (calendar.SelectedDate == null)
+            {
+                MessageBox.Show("날짜가 비어있습니다.", "에러", MessageBoxButton.OK);
+            }
+            else if (TextBox_Add.Text.Length == 0)
             {
                 MessageBox.Show("내용이 비어있습니다.", "에러", MessageBoxButton.OK);
+            }
+            else
+            {
+                jsonParser.AddJson(DatePicker_AddList.DisplayDate, TextBox_Add.Text);
+                MessageBox.Show("일정이 추가되었습니다.");
+                DatePicker_AddList.DisplayDate = DateTime.Now;
+                Calendar_AddList.SelectedDate = DateTime.Now;
+                TextBox_Add.Text = "";
+                TextBox_Add.UpdateLayout();
             }
 
         }
@@ -110,11 +99,7 @@ namespace TodoList
         /// <param name="e"></param>
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            DatePicker_AddList.DisplayDate = DateTime.Now;
-            Calendar_AddList.SelectedDate = DateTime.Now;
-            addTextBox.Text = "";
-            addTextBox.UpdateLayout();
-            Hide();
+            Close();
         }
     }
 

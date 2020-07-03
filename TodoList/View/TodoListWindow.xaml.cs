@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Threading;
 
 namespace TodoList
@@ -83,22 +84,18 @@ namespace TodoList
         /// </summary>
         private void InitJsonParser()
         {
-            if(jsonParser == null)
-            {
-                jsonParser = new JsonParser();
-            }
-            doListArray = jsonParser.jsonListArray;
-
-            foreach(JObject fElem in doListArray)
+            jsonParser = JsonParser.GetInstance();
+            doListArray = jsonParser.JsonListArray;
+            /*foreach(JObject fElem in doListArray)
             {
                 var fDate = fElem["Date"];
                 DateTime dt;
                 if(fDate != null)
                 {
                    dt = DateTime.Parse(fDate.ToString());
-                   //ControlCalendar.
+                   ControlCalendar.
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -198,14 +195,15 @@ namespace TodoList
         /// </summary>
         private void ChangeTodoList()
         {
+            int seq = 0;            
             foreach(JObject fElem in doListArray)
             {
-                var fDate = fElem["Date"];
-                if(fDate != null)
+                var fDate = DateTime.Parse(fElem["Date"].ToString());
+                if(fDate == mDateTime)
                 {
-                    var fDesc = fElem["Desc"];
-
-
+                    seq++;
+                    new TodoListModel() { Seq = seq, Desc = fElem["Desc"].ToString() };
+                   
                 }
             }
         }
@@ -222,7 +220,7 @@ namespace TodoList
                 mAddListWindow = new AddListWindow();
             }
             mAddListWindow.ShowDialog();
-            //ChangeTodoList();
+            ChangeTodoList();
         }
 
         /// <summary>
@@ -237,10 +235,11 @@ namespace TodoList
                 mRemoveListWindow = new RemoveListWindow();
             }
             mRemoveListWindow.ShowDialog();
+            ChangeTodoList();
         }
 
         /// <summary>
-        /// 날짜 변경시의 UI 변경
+        /// 날짜 변경시의 날짜에 관련한 UI 변경
         /// </summary>
         private void ChangeDate()
         {
@@ -250,6 +249,7 @@ namespace TodoList
                 mCalendar.DisplayDate = mDateTime;
             mCalendar.SelectedDate = mDateTime;
             TextData.Text = String.Format("{0}년 {1}월 {2}일", mDateTime.Year % 100, mDateTime.Month, mDateTime.Day);
+            ChangeTodoList();
         }
 
         /// <summary>
@@ -259,6 +259,7 @@ namespace TodoList
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            jsonParser.WriteFile();
             System.Environment.Exit(0);
         }
 
