@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -12,6 +14,10 @@ namespace TodoList
     /// </summary>
     public partial class TodoListWindow : Window
     {
+        #region Struct
+
+        #endregion
+
         #region Private Properties
 
         private Calendar mCalendar;
@@ -28,11 +34,11 @@ namespace TodoList
 
         private JArray doListArray;
 
+        private static List<TodoListModel> doList;
+
         #endregion
 
         #region Public Properties
-
-
 
         #endregion
 
@@ -195,14 +201,15 @@ namespace TodoList
         /// </summary>
         private void ChangeTodoList()
         {
-            int seq = 0;            
+            int seq = 0;
+            doList.Clear();
             foreach(JObject fElem in doListArray)
             {
                 var fDate = DateTime.Parse(fElem["Date"].ToString());
                 if(fDate == mDateTime)
                 {
                     seq++;
-                    new TodoListModel() { Seq = seq, Desc = fElem["Desc"].ToString() };
+                    doList.Add(new TodoListModel() { Seq = seq, Desc = fElem["Desc"].ToString() });
                    
                 }
             }

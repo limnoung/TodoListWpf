@@ -29,35 +29,9 @@ namespace TodoList
         #endregion
 
         #region Command
-        public class RegisterCommand : ICommand
-        {
-            public event EventHandler CanExecuteChanged;
-            private DateTime _date;
-            private String _desc;
-            
-            public RegisterCommand(DateTime date, String desc)
-            {
-                _date = date;
-                _desc = desc;
-            }
+        private ICommand registrationCommand;
 
-            public bool CanExecute(object parameter)
-            {
-               if(_date == null || _desc == String.Empty)
-                {
-                    return false;
-                }
-                return true;
-            }
-
-            public void Execute(object parameter)
-            {
-                SELECTE
-            }
-        }
-        private RegisterCommand registrationCommand;
-
-        public RegisterCommand RegistrationCommand
+        public ICommand RegistrationCommand
         {
             get
             {

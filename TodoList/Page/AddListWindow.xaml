@@ -58,18 +58,10 @@
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Content="추가" Margin="0 0 0 5" Width="80" 
                             FontSize="{StaticResource FontSizeSmall}"
-                            Name="AddBtn" IsDefault="True" Command="{Binding RegisterCommand}">
-                        <Button.CommandParameter>
-                            <MultiBinding Converter="{StaticResource DoListDateConverter}">
-                                <Binding ElementName="DatePicker_AddList" Path="SelectedDate"/>
-                                <Binding ElementName="TextBox_Add" Path="Text"/>
-                            </MultiBinding>
-                        </Button.CommandParameter>
-                    </Button>
+                            Name="AddBtn" IsDefault="True" Click="AddBtn_Click"/>
                     <Button Content="취소" Margin="15 0 0 5" Width="80"
                             FontSize="{StaticResource FontSizeSmall}"
                             IsCancel="True" Click="CancelBtn_Click"/>
-
                 </StackPanel>
             </Grid>
         </Grid>
